@@ -1,14 +1,15 @@
 import { defineConfig } from 'vitepress'
+import { codePreviewPlugin } from '../../src/index'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "code-preview",
-  description: "code-preview",
+  title: 'code-preview',
+  description: 'code-preview',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Examples', link: '/markdown-examples' },
     ],
 
     sidebar: [
@@ -16,13 +17,17 @@ export default defineConfig({
         text: 'Examples',
         items: [
           { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
+          { text: 'Runtime API Examples', link: '/api-examples' },
+        ],
+      },
     ],
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ]
-  }
+    socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],
+  },
+  markdown: {
+    lineNumbers: true,
+    config: (md) => {
+      md.use(codePreviewPlugin)
+    },
+  },
 })
