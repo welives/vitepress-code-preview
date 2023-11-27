@@ -1,5 +1,5 @@
 ---
-title: code-preview
+title: demo-preview-playground
 ---
 
 # test
@@ -41,10 +41,26 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup() {
-    const title = ref('this is jsx demo3334')
+    const title = ref('this is jsx demo')
     return () => <div>{title.value}</div>
   },
 })
 ```
 
 :::
+
+<style>
+body { color: red; }
+</style>
+
+<script setup>
+console.log('vitepress-theme-demoblock setup1')
+</script>
+
+<!-- <script setup>
+console.log('vitepress-theme-demoblock setup2')
+</script> -->
+
+<script>
+console.log('vitepress-theme-demoblock')
+</script>

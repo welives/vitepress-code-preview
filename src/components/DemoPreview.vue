@@ -7,14 +7,14 @@
       <div :class="$style['example-divider--horizontal']"></div>
       <div :class="$style['example-actions']">
         <Tooltip placement="bottom" :content="locale['edit-in-playground']">
-          <Playground :code="decodedRawSource" />
+          <Playground v-if="lang === 'vue'" style="cursor: pointer" :code="decodedRawSource" />
         </Tooltip>
         <div :class="$style['example-actions--right']">
           <Tooltip placement="bottom" :content="locale['copy-code']">
-            <Copy @click="copyCode" />
+            <Copy style="cursor: pointer" @click="copyCode" />
           </Tooltip>
           <Tooltip placement="bottom" :content="locale['view-source']">
-            <Code @click="toggleExpanded" />
+            <Code style="cursor: pointer" @click="toggleExpanded" />
           </Tooltip>
         </div>
         <span v-show="copyTip" :class="$style['example-actions-tip']">{{
@@ -39,14 +39,18 @@
 <script setup lang="ts">
 import { useData } from 'vitepress'
 import { ref, defineProps, computed } from 'vue'
+import CollapseTransition from './CollapseTransition.vue'
 import Tooltip from './Tooltip.vue'
 import Playground from './icons/SfcPlayground.vue'
 import Copy from './icons/Copy.vue'
 import Code from './icons/Code.vue'
 import EpCaretTop from './icons/EpCaretTop.vue'
-import CollapseTransition from './CollapseTransition.vue'
-import { useCopyCode } from '../hooks'
+import { useCopyCode } from '../hooks/useCopyCode'
+import '../style/transition.css'
 
+defineOptions({
+  name: 'DemoPreview',
+})
 const props = defineProps<{ rawSource: string; lang: string }>()
 const data = useData()
 const locale = computed(() => {

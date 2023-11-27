@@ -1,5 +1,5 @@
+// 从element-plus 抄来的, https://github.com/element-plus/element-plus/blob/dev/packages/hooks/use-namespace/index.ts
 import { computed, getCurrentInstance, inject, ref, unref } from 'vue'
-
 import type { InjectionKey, Ref } from 'vue'
 
 export const defaultNamespace = 'el'

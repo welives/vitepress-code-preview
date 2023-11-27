@@ -1,5 +1,5 @@
 {
-  "name": "docs",
+  "name": "demo-preview-playground",
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",

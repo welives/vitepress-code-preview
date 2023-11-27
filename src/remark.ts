@@ -4,13 +4,15 @@ import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkStringify from 'remark-stringify'
-import hash from 'hash-sum'
 import type { Node } from 'unist'
+import hash from 'hash-sum'
 
 interface ExtraNode extends Node {
   children?: Array<ExtraNode>
   [key: string]: any
 }
+// 因为一个markdown文件就相当于一个SFC组件,所以只能存在一个setup,这个正则就是用来尝试找出是否已有setup
+const ScriptSetupRegex = /^<script\s(.*\s)?setup(\s.*)?>([\s\S]*)<\/script>$/
 
 /**
  * 将markdown文件和哈希值组合成虚拟模块名
@@ -23,7 +25,7 @@ const combineVirtualModule = (id: string, key: string, lang: string) =>
  * @param code
  * @param id
  */
-export async function transformCodeToComponent(code: string, id: string) {
+export async function markdownToComponent(code: string, id: string) {
   // 用来收集markdown中的demo代码块
   const _blocks: Array<Record<string, any>> = []
   // 解析markdown文件
@@ -32,18 +34,27 @@ export async function transformCodeToComponent(code: string, id: string) {
     .use(remarkFrontmatter) // 处理markdown的元信息
     .use(() => (tree: ExtraNode) => {
       let seed = 0
+      const scriptSetup = { index: -1, content: '' }
       tree.children?.forEach((node, index) => {
         try {
+          // 判断是否已经存在 script setup 标签, 注释的忽略不处理
+          if (node.type === 'html') {
+            const m = node.value.trim().match(ScriptSetupRegex)
+            if (!m) return false
+            scriptSetup.index = index
+            scriptSetup.content = m[3] ?? ''
+          }
           if (!node.children || !node.children[0].value) return false
+          // 判断是否在demo容器内
           const hasDemo = node.children[0].value.trim().match(/demo\s*(.*)$/)
           if (hasDemo) {
             const hashKey = hash(`${id}-demo-${seed}`)
             _blocks.push({
-              lang: (tree.children![index + 1] as ExtraNode).lang,
-              code: (tree.children![index + 1] as ExtraNode).value,
+              lang: tree.children![index + 1].lang,
+              code: tree.children![index + 1].value,
               key: hashKey, // 每个代码块的唯一key
             })
-            node.children![0].value += ` virtual-${hashKey}`
+            node.children[0].value += ` virtual-${hashKey}`
             seed++
           }
         } catch (error) {
@@ -59,22 +70,32 @@ export async function transformCodeToComponent(code: string, id: string) {
           return `import Virtual${b.key} from '${moduleName}'`
         })
         .join(os.EOL)
-      // 将虚拟模块追加到markdown
-      tree.children?.push({
-        type: 'html',
-        value: `<script setup>${os.EOL}${virtualModules}${os.EOL}</script>`,
-      })
+      // 如果之前已经有一个 setup 的话,那就把虚拟模块塞进去
+      if (scriptSetup.index !== -1) {
+        const node = tree.children![scriptSetup.index]
+        node.value = node.value.replace(ScriptSetupRegex, (m: string, ...args: string[]) => {
+          return `<script ${args[0] ?? ''} setup ${args[1] ?? ''}>${os.EOL}${virtualModules}${
+            os.EOL
+          }${args[2] ?? ''}</script>`
+        })
+      } else {
+        // 如果没有setup的话,就新增一个用来将虚拟模块追加到markdown
+        tree.children?.push({
+          type: 'html',
+          value: `<script setup>${os.EOL}${virtualModules}${os.EOL}</script>`,
+        })
+      }
     })
     .use(remarkStringify) // 实例化compiler, 用于将经过人为处理后的 mdast 输出为 markdown
     .process(code) // 执行解析
 
   const blocks = _blocks.map((b) => {
     const moduleName = combineVirtualModule(id, b.key, b.lang)
-    Demoblocks.set(b.key, b.code)
+    cacheCode.set(b.key, b.code)
     return { lang: b.lang, code: b.code, key: b.key, id: moduleName }
   })
 
   return { parsedCode: String(parsed), blocks }
 }
 
-export const Demoblocks = new Map()
+export const cacheCode = new Map()

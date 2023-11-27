@@ -4,9 +4,12 @@
   </Transition>
 </template>
 <script lang="ts" setup>
+// 从element-plus 抄来的, https://github.com/element-plus/element-plus/blob/dev/packages/components/collapse-transition/src/collapse-transition.vue
 import type { RendererElement } from 'vue'
-import { useNamespace } from '../hooks'
-
+import { useNamespace } from '../hooks/useNamespace'
+defineOptions({
+  name: 'CollapseTransition',
+})
 const ns = useNamespace('collapse-transition')
 
 const reset = (el: RendererElement) => {

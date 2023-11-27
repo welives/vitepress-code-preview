@@ -20,6 +20,9 @@ import {
   ReferenceElement,
   FloatingElement,
 } from '@floating-ui/vue'
+defineOptions({
+  name: 'Tooltip',
+})
 const props = defineProps<{ placement: Placement; content: string }>()
 const reference = ref<ReferenceElement>()
 const floating = ref<FloatingElement>()

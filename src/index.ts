@@ -1,52 +1,60 @@
 import type { Plugin } from 'vite'
 import type MarkdownIt from 'markdown-it'
 import container from 'markdown-it-container'
-import { Demoblocks, transformCodeToComponent } from './remark'
+import { cacheCode, markdownToComponent } from './remark'
 export * from './hooks'
+
+interface PreviewPluginOptions {
+  componentName?: string
+}
 
 /**
  * vite插件, 用来转换markdown中的demo代码
  */
-export function viteCodePreviewPlugin(): Plugin {
+export function viteDemoPreviewPlugin(): Plugin {
+  // 用来收集已挂载的vite插件,因为在HMR那里需要手动更新
   let vitePlugin: any
   const options = {
-    env: 'vitepress',
+    mode: 'vitepress',
     root: '',
   }
+  // 用来匹配虚拟模块
   const virtualModRegex = /^virtual:.*\.md\.([a-zA-Z0-9]+)\.(vue|jsx|tsx)$/
   return {
-    name: 'vite-plugin-code-preview',
+    name: 'vite-plugin-demo-preview',
     enforce: 'pre',
     async configResolved(config) {
       const isVitepress = config.plugins.find((p) => p.name === 'vitepress')
       vitePlugin = config.plugins.find((p) => p.name === 'vite:vue')
-      options.env = isVitepress ? 'vitepress' : 'vite'
+      options.mode = isVitepress ? 'vitepress' : 'vite'
       options.root = config.root
     },
+    // 解析虚拟模块ID,如果请求的模块ID与预期的虚拟模块ID匹配,则返回该ID,否则返回undefined
     resolveId(id) {
-      // 解析虚拟模块ID,如果请求的模块ID与预期的虚拟模块ID匹配,则返回该ID,否则返回undefined
       if (virtualModRegex.test(id)) return id
     },
+    // 加载虚拟模块的内容,如果请求的模块ID与预期的虚拟模块ID匹配,则生成模块内容并返回,否则返回undefined
     load(id) {
-      // 加载虚拟模块的内容,如果请求的模块ID与预期的虚拟模块ID匹配,则生成模块内容并返回,否则返回undefined
       const m = id.trim().match(virtualModRegex)
       if (m) {
         const key = m.length > 1 ? m[1] : ''
         // 返回虚拟模块的源码
-        return Demoblocks.get(key)
+        return cacheCode.get(key)
       }
     },
+    // 把markdown中的demo代码块转换成组件
     async transform(code, id) {
       if (id.endsWith('.md')) {
-        const { parsedCode } = await transformCodeToComponent(code, id)
+        const { parsedCode } = await markdownToComponent(code, id)
         return { code: parsedCode, map: null }
       }
     },
+    // 自定义HMR更新
     async handleHotUpdate(ctx) {
       const { file, server, read } = ctx
       if (file.endsWith('.md')) {
         const content = await read()
-        const { parsedCode, blocks } = await transformCodeToComponent(content, file)
+        const { parsedCode, blocks } = await markdownToComponent(content, file)
         for (const b of blocks) {
           const virtualModule = server.moduleGraph.getModuleById(b.id)
           // 艹, 可算找到能更新虚拟模块的api了
@@ -54,7 +62,6 @@ export function viteCodePreviewPlugin(): Plugin {
             await server.reloadModule(virtualModule)
           }
         }
-
         return vitePlugin.handleHotUpdate({
           ...ctx,
           read: () => parsedCode,
@@ -67,15 +74,17 @@ export function viteCodePreviewPlugin(): Plugin {
 /**
  * markdown插件,用来解析demo代码
  */
-export function codePreviewPlugin(md: MarkdownIt) {
-  md.use(containerPlugin)
-  md.use(codePlugin)
+export function demoPreviewPlugin(md: MarkdownIt, options: PreviewPluginOptions = {}) {
+  options.componentName = options.componentName || 'DemoPreview'
+  md.use(createDemoContainer, options)
+  md.use(renderDemoCode)
 }
 
 /**
  * 自定义容器，也就是用:::demo  ::: 包裹起来的部分
  */
-function containerPlugin(md: MarkdownIt) {
+function createDemoContainer(md: MarkdownIt, options: PreviewPluginOptions) {
+  const componentName = options.componentName!
   md.use(container, 'demo', {
     validate(params: string) {
       return !!params.trim().match(/^demo\s*(.*)$/)
@@ -88,23 +97,21 @@ function containerPlugin(md: MarkdownIt) {
         // content 就是实际的代码部分
         const content = tokens[idx + 1].type === 'fence' ? tokens[idx + 1].content : ''
         const lang = tokens[idx + 1].info
-        /**
-         * !这个<CodePreview>标签表示之后注册组件时所使用的组件名
-         */
-        return `<CodePreview lang="${lang}" rawSource="${encodeURIComponent(
+        // 这个componentName表示之后注册组件时所使用的组件名
+        return `<${componentName} lang="${lang}" rawSource="${encodeURIComponent(
           content
         )}"><${description} />`
       }
       // 结束标签
-      return '</CodePreview>'
+      return `</${componentName}>`
     },
   })
 }
 
 /**
- * 解析自定义容器内部的代码块，并用手风琴折叠起来
+ * 解析渲染自定义容器内部的代码块
  */
-function codePlugin(md: MarkdownIt) {
+function renderDemoCode(md: MarkdownIt) {
   const defaultRender = md.renderer.rules.fence!
   md.renderer.rules.fence = (...args) => {
     const [tokens, idx] = args

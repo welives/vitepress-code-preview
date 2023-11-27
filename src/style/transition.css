@@ -1,3 +1,6 @@
+/*
+ * 提取自element-plus https://github.com/element-plus/element-plus/blob/dev/packages/theme-chalk/src/common/transition.scss
+*/
 :root {
   --el-transition-duration: 0.3s;
   --el-transition-duration-fast: 0.2s;
@@ -19,7 +22,6 @@
     var(--el-transition-function-ease-in-out-bezier);
 }
 
-/*  */
 .fade-in-linear-enter-active,
 .fade-in-linear-leave-active {
   transition: var(--el-transition-fade-linear);
@@ -29,7 +31,6 @@
   opacity: 0;
 }
 
-/*  */
 .el-fade-in-linear-enter-active,
 .el-fade-in-linear-leave-active {
   transition: var(--el-transition-fade-linear);
@@ -39,7 +40,6 @@
   opacity: 0;
 }
 
-/*  */
 .el-fade-in-enter-active,
 .el-fade-in-leave-active {
   transition: all var(--el-transition-duration) cubic-bezier(0.55, 0, 0.1, 1);
@@ -49,7 +49,6 @@
   opacity: 0;
 }
 
-/*  */
 .el-fade-in-enter-active,
 .el-fade-in-leave-active {
   transition: all var(--el-transition-duration) cubic-bezier(0.55, 0, 0.1, 1);
@@ -59,7 +58,6 @@
   opacity: 0;
 }
 
-/*  */
 .el-zoom-in-center-enter-active,
 .el-zoom-in-center-leave-active {
   transition: all var(--el-transition-duration) cubic-bezier(0.55, 0, 0.1, 1);
@@ -70,7 +68,6 @@
   transform: scaleX(0);
 }
 
-/*  */
 .el-zoom-in-top-enter-active,
 .el-zoom-in-top-leave-active {
   opacity: 1;
@@ -88,7 +85,6 @@
   transform: scaleY(0);
 }
 
-/*  */
 .el-zoom-in-bottom-enter-active,
 .el-zoom-in-bottom-leave-active {
   opacity: 1;
@@ -102,7 +98,6 @@
   transform: scaleY(0);
 }
 
-/*  */
 .el-zoom-in-left-enter-active,
 .el-zoom-in-left-leave-active {
   opacity: 1;
@@ -116,7 +111,6 @@
   transform: scale(0.45, 0.45);
 }
 
-/*  */
 .collapse-transition {
   transition:
     var(--el-transition-duration) height ease-in-out,
@@ -124,7 +118,6 @@
     var(--el-transition-duration) padding-bottom ease-in-out;
 }
 
-/*  */
 .el-collapse-transition-leave-active,
 .el-collapse-transition-enter-active {
   transition:
@@ -133,7 +126,6 @@
     var(--el-transition-duration) padding-bottom ease-in-out;
 }
 
-/*  */
 .horizontal-collapse-transition {
   transition:
     var(--el-transition-duration) width ease-in-out,
@@ -141,7 +133,6 @@
     var(--el-transition-duration) padding-right ease-in-out;
 }
 
-/*  */
 .el-list-enter-active,
 .el-list-leave-active {
   transition: all 1s;

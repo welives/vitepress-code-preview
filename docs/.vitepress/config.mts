@@ -1,10 +1,10 @@
 import { defineConfig } from 'vitepress'
-import { codePreviewPlugin } from '../../src/index'
+import { demoPreviewPlugin } from '../../src/index'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: 'code-preview',
-  description: 'code-preview',
+  title: 'demo-preview-playground',
+  description: 'demo-preview-playground',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -27,7 +27,7 @@ export default defineConfig({
   markdown: {
     lineNumbers: true,
     config: (md) => {
-      md.use(codePreviewPlugin)
+      md.use(demoPreviewPlugin)
     },
   },
 })

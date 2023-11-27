@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: "code-preview"
-  text: "code-preview"
+  name: 'demo-preview-playground'
+  text: 'demo-preview-playground'
   tagline: My great project tagline
   actions:
     - theme: brand
@@ -22,4 +22,3 @@ features:
   - title: Feature C
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
-
