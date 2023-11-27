@@ -11,25 +11,35 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/hash-sum": "^1.0.2",
     "@types/markdown-it": "^13.0.7",
     "@types/markdown-it-container": "^2.0.9",
+    "@types/minimist": "^1.2.5",
     "@types/node": "^20.10.0",
+    "@types/unist": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
-    "@vitejs/plugin-vue": "^4.5.0",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "chalk": "^5.3.0",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-vue": "^9.18.1",
-    "markdown-it": "^13.0.2",
-    "markdown-it-container": "^3.0.0",
+    "minimist": "^1.2.8",
     "prettier": "^3.1.0",
     "typescript": "^5.3.2",
     "vite": "^5.0.2",
     "vitepress": "1.0.0-rc.30"
   },
   "dependencies": {
+    "@floating-ui/vue": "^1.0.2",
+    "hash-sum": "^2.0.0",
+    "markdown-it": "^13.0.2",
+    "markdown-it-container": "^3.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
+    "unified": "^11.0.4",
     "vue": "^3.3.8"
   }
 }

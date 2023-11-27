@@ -1,12 +1,12 @@
+import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-import type { EnhanceAppContext } from 'vitepress'
 import CodePreview from '../../../src/components/CodePreview.vue'
 import { useComponents } from '../../../src'
 
 export default {
   ...DefaultTheme,
-  enhanceApp(ctx: EnhanceAppContext) {
+  enhanceApp(ctx) {
     const { app } = ctx
-    useComponents(app, 'CodePreview', CodePreview)
+    useComponents(app, CodePreview)
   },
-}
+} satisfies Theme

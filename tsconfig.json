@@ -14,6 +14,6 @@
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"],
+  "include": ["src", "components.d.ts"],
   "exclude": ["dist", "node_modules"]
 }
