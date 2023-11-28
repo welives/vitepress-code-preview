@@ -1,4 +1,5 @@
 import os from 'node:os'
+import fs from 'node:fs'
 import path from 'node:path'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
@@ -16,16 +17,21 @@ const ScriptSetupRegex = /^<script\s(.*\s)?setup(\s.*)?>([\s\S]*)<\/script>$/
 
 /**
  * 将markdown文件和哈希值组合成虚拟模块名
+ * @param id 模块id
+ * @param key 代码块哈希值
+ * @param lang 代码块所属语言
+ * @returns
  */
 const combineVirtualModule = (id: string, key: string, lang: string) =>
   `virtual:${path.basename(id)}.${key}.${lang}`
 
 /**
  * 把markdown中的demo代码转换为组件
- * @param code
- * @param id
+ * @param code markdown的原始内容
+ * @param id 模块id
+ * @param root docs文档根目录
  */
-export async function markdownToComponent(code: string, id: string) {
+export async function markdownToComponent(code: string, id: string, root: string) {
   // 用来收集markdown中的demo代码块
   const _blocks: Array<Record<string, any>> = []
   // 解析markdown文件
@@ -45,9 +51,11 @@ export async function markdownToComponent(code: string, id: string) {
             scriptSetup.content = m[3] ?? ''
           }
           if (!node.children || !node.children[0].value) return false
-          // 判断是否在demo容器内
+          // 判断demo容器是否为内联代码块的模式
           const hasDemo = node.children[0].value.trim().match(/demo\s*(.*)$/)
-          if (hasDemo) {
+          const nextNodeIsCode = hasDemo && tree.children![index + 1].type === 'code'
+          // 下一个节点如果是内联代码块的话
+          if (nextNodeIsCode) {
             const hashKey = hash(`${id}-demo-${seed}`)
             _blocks.push({
               lang: tree.children![index + 1].lang,
@@ -55,6 +63,24 @@ export async function markdownToComponent(code: string, id: string) {
               key: hashKey, // 每个代码块的唯一key
             })
             node.children[0].value += ` virtual-${hashKey}`
+            seed++
+          }
+          // 判断demo容器是否为引入文件的模式
+          const hasSrc = node.children[0].value.trim().match(/^:::demo\s*(src=.*)\s*:::$/)
+          if (hasSrc) {
+            const markdownId = path.relative(root, id)
+            const sourceFile = hasSrc && hasSrc.length > 1 ? hasSrc[1]?.split('=')[1].trim() : ''
+            // 记录当前markdown使用了哪些组件
+            cacheFile.set(markdownId, path.join(sourceFile))
+            const lang = path.extname(sourceFile).slice(1)
+            const source = fs.readFileSync(path.resolve(root, sourceFile), 'utf-8')
+            const hashKey = hash(`${id}-demo-${seed}`)
+            _blocks.push({
+              lang,
+              code: source,
+              key: hashKey,
+            })
+            node.children[0].value = `:::demo src=${sourceFile} virtual-${hashKey}${os.EOL}:::`
             seed++
           }
         } catch (error) {
@@ -94,8 +120,8 @@ export async function markdownToComponent(code: string, id: string) {
     cacheCode.set(b.key, b.code)
     return { lang: b.lang, code: b.code, key: b.key, id: moduleName }
   })
-
   return { parsedCode: String(parsed), blocks }
 }
 
 export const cacheCode = new Map()
+export const cacheFile = new Map()

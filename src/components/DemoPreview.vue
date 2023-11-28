@@ -7,7 +7,7 @@
       <div :class="$style['example-divider--horizontal']"></div>
       <div :class="$style['example-actions']">
         <Tooltip placement="bottom" :content="locale['edit-in-playground']">
-          <Playground v-if="lang === 'vue'" style="cursor: pointer" :code="decodedRawSource" />
+          <Playground v-if="lang === 'vue'" style="cursor: pointer" :code="decodedSource" />
         </Tooltip>
         <div :class="$style['example-actions--right']">
           <Tooltip placement="bottom" :content="locale['copy-code']">
@@ -23,7 +23,13 @@
       </div>
       <CollapseTransition>
         <div v-show="isExpanded" :class="$style['example-source-wrapper']">
-          <slot name="highlight" />
+          <template v-if="isFile">
+            <div :class="`example-source language-${lang}`">
+              <span class="lang">{{ lang }}</span>
+              <div v-html="decodedHlSource"></div>
+            </div>
+          </template>
+          <slot v-else name="highlight" />
         </div>
       </CollapseTransition>
       <Transition name="el-fade-in-linear">
@@ -48,10 +54,21 @@ import EpCaretTop from './icons/EpCaretTop.vue'
 import { useCopyCode } from '../hooks/useCopyCode'
 import '../style/transition.css'
 
+interface DemoProps {
+  lang: string // 源码类型
+  source: string // 转码后的源码内容
+  isFile: boolean // 是否为引入文件的模式
+  hlSource?: string // 转码后的markdown高亮源码
+}
+
 defineOptions({
   name: 'DemoPreview',
 })
-const props = defineProps<{ rawSource: string; lang: string }>()
+const props = withDefaults(defineProps<DemoProps>(), {
+  lang: 'vue',
+  isFile: false,
+  hlSource: '',
+})
 const data = useData()
 const locale = computed(() => {
   return (
@@ -64,12 +81,13 @@ const locale = computed(() => {
     }
   )
 })
-const decodedRawSource = computed(() => decodeURIComponent(props.rawSource))
+const decodedSource = computed(() => decodeURIComponent(props.source))
+const decodedHlSource = computed(() => decodeURIComponent(props.hlSource))
 const isExpanded = ref(false)
 const toggleExpanded = () => {
   isExpanded.value = !isExpanded.value
 }
-const { copyTip, copyCode } = useCopyCode(decodedRawSource.value)
+const { copyTip, copyCode } = useCopyCode(decodedSource.value)
 </script>
 
 <style module>

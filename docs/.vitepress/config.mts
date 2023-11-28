@@ -1,3 +1,4 @@
+import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vitepress'
 import { demoPreviewPlugin } from '../../src/index'
 
@@ -27,7 +28,8 @@ export default defineConfig({
   markdown: {
     lineNumbers: true,
     config: (md) => {
-      md.use(demoPreviewPlugin)
+      const docRoot = fileURLToPath(new URL('../', import.meta.url))
+      demoPreviewPlugin(md, { docRoot })
     },
   },
 })

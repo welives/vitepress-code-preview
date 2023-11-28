@@ -1,10 +1,13 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import type { Plugin } from 'vite'
 import type MarkdownIt from 'markdown-it'
 import container from 'markdown-it-container'
-import { cacheCode, markdownToComponent } from './remark'
+import { cacheCode, cacheFile, markdownToComponent } from './remark'
 export * from './hooks'
 
 interface PreviewPluginOptions {
+  docRoot: string
   componentName?: string
 }
 
@@ -27,7 +30,7 @@ export function viteDemoPreviewPlugin(): Plugin {
       const isVitepress = config.plugins.find((p) => p.name === 'vitepress')
       vitePlugin = config.plugins.find((p) => p.name === 'vite:vue')
       options.mode = isVitepress ? 'vitepress' : 'vite'
-      options.root = config.root
+      options.root = path.resolve(config.root) // 提前抹平系统差异
     },
     // 解析虚拟模块ID,如果请求的模块ID与预期的虚拟模块ID匹配,则返回该ID,否则返回undefined
     resolveId(id) {
@@ -44,17 +47,23 @@ export function viteDemoPreviewPlugin(): Plugin {
     },
     // 把markdown中的demo代码块转换成组件
     async transform(code, id) {
-      if (id.endsWith('.md')) {
-        const { parsedCode } = await markdownToComponent(code, id)
-        return { code: parsedCode, map: null }
-      }
+      if (!id.endsWith('.md')) return
+      const { parsedCode } = await markdownToComponent(code, path.resolve(id), options.root)
+      return { code: parsedCode, map: null }
     },
     // 自定义HMR更新
     async handleHotUpdate(ctx) {
       const { file, server, read } = ctx
+      const manualUpdateRegex = /\.(md|vue|jsx|tsx)$/
+      if (!manualUpdateRegex.test(file)) return
+      // 正向更新,通过markdown文件更新内部代码块
       if (file.endsWith('.md')) {
         const content = await read()
-        const { parsedCode, blocks } = await markdownToComponent(content, file)
+        const { parsedCode, blocks } = await markdownToComponent(
+          content,
+          path.resolve(file),
+          options.root
+        )
         for (const b of blocks) {
           const virtualModule = server.moduleGraph.getModuleById(b.id)
           // 艹, 可算找到能更新虚拟模块的api了
@@ -66,6 +75,30 @@ export function viteDemoPreviewPlugin(): Plugin {
           ...ctx,
           read: () => parsedCode,
         })
+      } else {
+        // 反向更新,通过被引用的组件来更新markdown
+        const fileName = path.relative(options.root, file)
+        for (const [key, value] of cacheFile.entries()) {
+          if (fileName === value) {
+            const markdownPath = path.resolve(options.root, key) // 组合完整的markdown文件路径
+            const content = fs.readFileSync(markdownPath, 'utf-8')
+            const { parsedCode, blocks } = await markdownToComponent(
+              content,
+              markdownPath,
+              options.root
+            )
+            for (const b of blocks) {
+              const virtualModule = server.moduleGraph.getModuleById(b.id)
+              if (virtualModule) {
+                await server.reloadModule(virtualModule)
+              }
+            }
+            return vitePlugin.handleHotUpdate({
+              ...ctx,
+              read: () => parsedCode,
+            })
+          }
+        }
       }
     },
   }
@@ -74,7 +107,7 @@ export function viteDemoPreviewPlugin(): Plugin {
 /**
  * markdown插件,用来解析demo代码
  */
-export function demoPreviewPlugin(md: MarkdownIt, options: PreviewPluginOptions = {}) {
+export function demoPreviewPlugin(md: MarkdownIt, options: PreviewPluginOptions = { docRoot: '' }) {
   options.componentName = options.componentName || 'DemoPreview'
   md.use(createDemoContainer, options)
   md.use(renderDemoCode)
@@ -84,23 +117,31 @@ export function demoPreviewPlugin(md: MarkdownIt, options: PreviewPluginOptions 
  * 自定义容器，也就是用:::demo  ::: 包裹起来的部分
  */
 function createDemoContainer(md: MarkdownIt, options: PreviewPluginOptions) {
-  const componentName = options.componentName!
+  const { componentName = 'DemoPreview', docRoot } = options
   md.use(container, 'demo', {
     validate(params: string) {
       return !!params.trim().match(/^demo\s*(.*)$/)
     },
     render(tokens: MarkdownIt.Token[], idx: number) {
-      const m = tokens[idx].info.trim().match(/^demo\s*(.*)$/)
+      const m = tokens[idx].info.trim().match(/^demo\s*(src=.*\s)?(virtual-([a-zA-Z0-9]+))?$/)
       // 开始标签的 nesting 为 1，结束标签的 nesting 为 -1
       if (tokens[idx].nesting === 1) {
-        const description = m && m.length > 1 ? m[1] : ''
-        // content 就是实际的代码部分
-        const content = tokens[idx + 1].type === 'fence' ? tokens[idx + 1].content : ''
-        const lang = tokens[idx + 1].info
+        const virtualId = m && m.length > 2 ? m[2] : ''
+        const sourceFile = m && m.length > 1 ? m[1]?.split('=')[1].trim() : ''
+        let source = ''
+        let lang = ''
+        if (sourceFile) {
+          lang = path.extname(sourceFile).slice(1)
+          source = fs.readFileSync(path.resolve(docRoot, sourceFile), 'utf-8')
+          if (!source) throw new Error(`Incorrect source file: ${sourceFile}`)
+        } else {
+          lang = tokens[idx + 1].info
+          source = tokens[idx + 1].type === 'fence' ? tokens[idx + 1].content : ''
+        }
         // 这个componentName表示之后注册组件时所使用的组件名
-        return `<${componentName} lang="${lang}" rawSource="${encodeURIComponent(
-          content
-        )}"><${description} />`
+        return `<${componentName} :isFile="${!!sourceFile}" hlSource="${encodeURIComponent(
+          md.options.highlight?.(source, lang, '') ?? ''
+        )}" lang="${lang}" source="${encodeURIComponent(source)}"><${virtualId} />`
       }
       // 结束标签
       return `</${componentName}>`
@@ -112,6 +153,7 @@ function createDemoContainer(md: MarkdownIt, options: PreviewPluginOptions) {
  * 解析渲染自定义容器内部的代码块
  */
 function renderDemoCode(md: MarkdownIt) {
+  // 这个 fence 就类似 ```vue ... ``` 代码块中的那个vue标识
   const defaultRender = md.renderer.rules.fence!
   md.renderer.rules.fence = (...args) => {
     const [tokens, idx] = args
