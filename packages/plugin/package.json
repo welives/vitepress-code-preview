@@ -1,0 +1,63 @@
+{
+  "name": "vitepress-demo-preview-plugin",
+  "version": "1.0.0",
+  "description": "preview component of code and component in vitepress",
+  "keywords": [
+    "Vite",
+    "VitePress",
+    "Vue",
+    "plugin",
+    "demo",
+    "preview",
+    "jsx",
+    "tsx"
+  ],
+  "author": "welives",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "dev": "rollup --config rollup.config.ts --watch",
+    "build": "rollup --config rollup.config.ts"
+  },
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "devDependencies": {
+    "@types/hash-sum": "^1.0.2",
+    "@types/markdown-it": "^13.0.7",
+    "@types/markdown-it-container": "^2.0.9",
+    "@types/unist": "^3.0.2",
+    "vite": "^5.0.2",
+    "vitepress": "^1.0.0-rc.30"
+  },
+  "dependencies": {
+    "hash-sum": "^2.0.0",
+    "markdown-it": "^13.0.2",
+    "markdown-it-container": "^3.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
+    "unified": "^11.0.4"
+  },
+  "peerDependencies": {
+    "vite": "^4.5.0",
+    "vitepress": "*"
+  },
+  "packageManager": "pnpm@8.10.0"
+}

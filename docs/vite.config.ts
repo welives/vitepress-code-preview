@@ -1,7 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { viteDemoPreviewPlugin } from '../src'
+import { viteDemoPreviewPlugin } from '../packages/plugin'
 
 export default defineConfig(async ({ mode }) => {
   return {

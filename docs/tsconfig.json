@@ -5,6 +5,6 @@
       "~/*": ["./.vitepress/*"]
     }
   },
-  "include": [".vitepress/**/*"],
+  "include": ["**/*"],
   "exclude": ["node_modules", ".vitepress/cache"]
 }

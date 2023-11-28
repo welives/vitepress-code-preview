@@ -2,6 +2,7 @@ yalc.lock
 .yalc
 docs/.vitepress/cache
 docs/.vitepress/dist
+dist
 
 # File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
 

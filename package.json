@@ -1,45 +1,52 @@
 {
-  "name": "demo-preview",
+  "name": "vitepress-demo-preview",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/index.ts",
+  "description": "preview component of code and component in vitepress",
+  "keywords": [
+    "Vite",
+    "VitePress",
+    "Vue",
+    "jsx",
+    "tsx",
+    "demo",
+    "preview"
+  ],
+  "author": "welives",
+  "license": "MIT",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "workspaces": [
+    "docs",
+    "packages/*"
+  ],
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@types/hash-sum": "^1.0.2",
-    "@types/markdown-it": "^13.0.7",
-    "@types/markdown-it-container": "^2.0.9",
-    "@types/minimist": "^1.2.5",
     "@types/node": "^20.10.0",
-    "@types/unist": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
+    "@vitejs/plugin-vue": "^4.5.0",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
-    "chalk": "^5.3.0",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-vue": "^9.18.1",
-    "minimist": "^1.2.8",
     "prettier": "^3.1.0",
     "typescript": "^5.3.2",
-    "vite": "^5.0.2",
-    "vitepress": "1.0.0-rc.30"
-  },
-  "dependencies": {
-    "@floating-ui/vue": "^1.0.2",
-    "hash-sum": "^2.0.0",
-    "markdown-it": "^13.0.2",
-    "markdown-it-container": "^3.0.0",
-    "remark-frontmatter": "^5.0.0",
-    "remark-parse": "^11.0.0",
-    "remark-stringify": "^11.0.0",
-    "unified": "^11.0.4",
     "vue": "^3.3.8"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "packageManager": "pnpm@8.10.0",
+  "engines": {
+    "node": ">= 16"
   }
 }

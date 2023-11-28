@@ -1,9 +1,9 @@
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-import DemoPreview from '../../../src/components/DemoPreview.vue'
-import { useComponents } from '../../../src'
-import Button from '../../../src/UI/Button.vue'
-import '../../../src/UI/index.css'
+import DemoPreview from '../../../packages/container/components/DemoPreview.vue'
+import { useComponents } from '../../../packages/container'
+import Button from '../../../src/Button.vue'
+import '../../../src/index.css'
 
 export default {
   ...DefaultTheme,

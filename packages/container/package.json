@@ -1,0 +1,56 @@
+{
+  "name": "vitepress-demo-preview-container",
+  "version": "1.0.0",
+  "description": "preview component of code and component in vitepress",
+  "keywords": [
+    "Vite",
+    "VitePress",
+    "Vue",
+    "plugin",
+    "demo",
+    "preview"
+  ],
+  "author": "welives",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/preview-container.umd.cjs",
+  "module": "./dist/preview-container.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/preview-container.js",
+      "require": "./dist/preview-container.umd.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build"
+  },
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.5.0",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "vite-plugin-dts": "^3.6.3",
+    "vite": "^5.0.2",
+    "vitepress": "1.0.0-rc.30"
+  },
+  "dependencies": {
+    "@floating-ui/vue": "^1.0.2",
+    "vue": "^3.3.8"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0",
+    "vite": "^4.5.0",
+    "vitepress": "*"
+  },
+  "packageManager": "pnpm@8.10.0"
+}

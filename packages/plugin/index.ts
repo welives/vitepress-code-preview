@@ -1,10 +1,9 @@
-import fs from 'node:fs'
-import path from 'node:path'
+import fs from 'fs'
+import path from 'path'
 import type { Plugin } from 'vite'
 import type MarkdownIt from 'markdown-it'
 import container from 'markdown-it-container'
 import { cacheCode, cacheFile, markdownToComponent } from './remark'
-export * from './hooks'
 
 interface PreviewPluginOptions {
   docRoot: string

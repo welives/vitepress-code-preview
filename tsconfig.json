@@ -3,17 +3,18 @@
     "baseUrl": ".",
     "module": "esnext",
     "target": "esnext",
-    "lib": ["DOM", "ESNext"],
     "jsx": "preserve",
     "moduleResolution": "node",
     "strict": true,
-    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "noUnusedLocals": true,
     "strictNullChecks": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"],
-  "exclude": ["dist", "node_modules"]
+  "include": ["src", "packages/**/*.ts", "packages/**/*.vue", "docs/.vitepress/**/*"],
+  "exclude": ["**/dist", "**/node_modules"]
 }
