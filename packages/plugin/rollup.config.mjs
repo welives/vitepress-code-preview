@@ -7,10 +7,11 @@ export default {
       format: 'cjs',
     },
     {
-      file: 'dist/index.mjs',
+      file: 'dist/index.js',
       format: 'es',
     },
   ],
-  external: ['vue', 'vite', 'vitepress'],
   plugins: [ts()],
+  watch: { exclude: 'node_modules/**' },
+  external: ['vite', 'vitepress'],
 }

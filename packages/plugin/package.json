@@ -16,11 +16,11 @@
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
@@ -30,8 +30,8 @@
     "package.json"
   ],
   "scripts": {
-    "dev": "rollup --config rollup.config.ts --watch",
-    "build": "rollup --config rollup.config.ts"
+    "dev": "rollup -c --watch",
+    "build": "rollup -c"
   },
   "homepage": "",
   "repository": {
@@ -43,6 +43,8 @@
     "@types/markdown-it": "^13.0.7",
     "@types/markdown-it-container": "^2.0.9",
     "@types/unist": "^3.0.2",
+    "rollup": "^4.6.0",
+    "rollup-plugin-ts": "^3.4.5",
     "vite": "^5.0.2",
     "vitepress": "^1.0.0-rc.30"
   },
