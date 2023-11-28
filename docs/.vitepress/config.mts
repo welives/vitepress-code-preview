@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vitepress'
-import { demoPreviewPlugin } from '../../packages/plugin'
+import { demoPreviewPlugin } from 'vitepress-demo-preview-plugin'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
