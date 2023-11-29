@@ -8,8 +8,8 @@
     "preview": "vitepress preview"
   },
   "dependencies": {
-    "@vitepress-code-preview/container": "workspace:^1.0.0",
-    "@vitepress-code-preview/plugin": "workspace:^1.0.0",
+    "@vitepress-code-preview/container": "workspace:^1.0.1",
+    "@vitepress-code-preview/plugin": "workspace:^1.0.2",
     "vue": "^3.3.8"
   },
   "devDependencies": {

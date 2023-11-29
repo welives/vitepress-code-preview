@@ -24,9 +24,12 @@
   ],
   "type": "module",
   "scripts": {
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:dev": "pnpm --filter=code-preview-example dev",
+    "docs:preview": "pnpm --filter=code-preview-example preview",
+    "docs:build": "pnpm --filter=code-preview-example build",
+    "build": "pnpm container:build && pnpm plugin:build",
+    "container:build": "pnpm --filter=@vitepress-code-preview/container build",
+    "plugin:build": "pnpm --filter=@vitepress-code-preview/plugin build"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",

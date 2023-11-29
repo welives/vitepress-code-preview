@@ -7,15 +7,14 @@ export default defineConfig({
   title: 'code-preview-example',
   description: 'code-preview-example',
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    nav: [{ text: '用法', link: '/guide' }],
+    nav: [{ text: '文档', link: '/guide' }],
     sidebar: [
       {
-        text: '用法',
+        text: '快速上手',
         link: '/guide',
       },
     ],
-    socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/welives/vitepress-code-preview' }],
   },
   markdown: {
     lineNumbers: true,
