@@ -1,1 +1,1 @@
-# vitepress-demo-preview-plugin
+# vitepress-code-preview-plugin

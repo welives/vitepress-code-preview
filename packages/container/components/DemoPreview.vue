@@ -101,7 +101,7 @@ const { copyTip, copyCode } = useCopyCode(decodedSource.value)
 .example {
   border: 1px solid var(--vp-c-divider);
   border-radius: 1px;
-  margin-bottom: 24px;
+  margin: 20px 0 50px;
 }
 .example-showcase {
   padding: 1rem;

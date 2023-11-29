@@ -20,7 +20,6 @@ const ScriptSetupRegex = /^<script\s(.*\s)?setup(\s.*)?>([\s\S]*)<\/script>$/
  * @param id 模块id
  * @param key 代码块哈希值
  * @param lang 代码块所属语言
- * @returns
  */
 const combineVirtualModule = (id: string, key: string, lang: string) =>
   `virtual:${path.basename(id)}.${key}.${lang}`
@@ -33,7 +32,7 @@ const combineVirtualModule = (id: string, key: string, lang: string) =>
  */
 export async function markdownToComponent(code: string, id: string, root: string) {
   // 用来收集markdown中的demo代码块
-  const _blocks: Array<Record<string, any>> = []
+  const _blocks: { lang: string; code: string; key: string }[] = []
   // 解析markdown文件
   const parsed = await unified()
     .use(remarkParse) // 实例化parser, 用于生成 mdast
@@ -62,7 +61,7 @@ export async function markdownToComponent(code: string, id: string, root: string
               code: tree.children![index + 1].value,
               key: hashKey, // 每个代码块的唯一key
             })
-            node.children[0].value += ` virtual-${hashKey}`
+            node.children[0].value += ` Virtual-${hashKey}`
             seed++
           }
           // 判断demo容器是否为引入文件的模式
@@ -71,7 +70,7 @@ export async function markdownToComponent(code: string, id: string, root: string
             const markdownId = path.relative(root, id)
             const sourceFile = hasSrc && hasSrc.length > 1 ? hasSrc[1]?.split('=')[1].trim() : ''
             // 记录当前markdown使用了哪些组件
-            cacheFile.set(markdownId, path.join(sourceFile))
+            handleCacheFile(markdownId, path.join(sourceFile))
             const lang = path.extname(sourceFile).slice(1)
             const source = fs.readFileSync(path.resolve(root, sourceFile), 'utf-8')
             const hashKey = hash(`${id}-demo-${seed}`)
@@ -80,7 +79,7 @@ export async function markdownToComponent(code: string, id: string, root: string
               code: source,
               key: hashKey,
             })
-            node.children[0].value = `:::demo src=${sourceFile} virtual-${hashKey}${os.EOL}:::`
+            node.children[0].value = `:::demo src=${sourceFile} Virtual-${hashKey}${os.EOL}:::`
             seed++
           }
         } catch (error) {
@@ -118,10 +117,21 @@ export async function markdownToComponent(code: string, id: string, root: string
   const blocks = _blocks.map((b) => {
     const moduleName = combineVirtualModule(id, b.key, b.lang)
     cacheCode.set(b.key, b.code)
-    return { lang: b.lang, code: b.code, key: b.key, id: moduleName }
+    return { ...b, id: moduleName }
   })
   return { parsedCode: String(parsed), blocks }
 }
 
-export const cacheCode = new Map()
-export const cacheFile = new Map()
+/**
+ * 将markdown文件和所引用的组件关系缓存起来
+ * @param mdId markdown 文件
+ * @param file 组件
+ */
+function handleCacheFile(mdId: string, file: string) {
+  const prev: string[] = cacheFile.get(mdId) ?? []
+  const files = Array.from(new Set([...prev.filter(Boolean), file]))
+  cacheFile.set(mdId, files)
+}
+
+export const cacheCode = new Map<string, string>()
+export const cacheFile = new Map<string, string[]>()

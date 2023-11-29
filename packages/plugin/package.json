@@ -1,5 +1,5 @@
 {
-  "name": "vitepress-demo-preview-plugin",
+  "name": "@vitepress-code-preview/plugin",
   "version": "1.0.0",
   "description": "preview component of code and component in vitepress",
   "keywords": [

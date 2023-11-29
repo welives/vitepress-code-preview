@@ -1,24 +1,30 @@
 ---
-title: demo-preview-playground
+title: 用法
 ---
 
-# test
+# basic
 
 :::demo
 
 ```vue
 <template>
-  <div>demo</div>
+  <div>{{ title }}</div>
 </template>
+<script lang="ts" setup>
+import { ref, defineComponent } from 'vue'
+const title = ref('this is basic demo12')
+</script>
 ```
 
 :::
 
+# Use Component
+
 :::demo
 
 ```vue
 <template>
-  <MoButton>{{ title }}</MoButton>
+  <MoButton>默认按钮</MoButton>
   <MoButton type="primary">主要按钮</MoButton>
   <MoButton type="success">成功按钮</MoButton>
   <MoButton type="info">信息按钮</MoButton>
@@ -39,8 +45,17 @@ export default defineComponent({
 
 :::
 
+# Use File
+
+```md
 :::demo src=examples/Input.vue
 :::
+```
+
+:::demo src=examples/Input.vue
+:::
+
+# Support JSX and TSX
 
 :::demo
 
@@ -56,19 +71,3 @@ export default defineComponent({
 ```
 
 :::
-
-<style>
-body { color: red; }
-</style>
-
-<script setup>
-console.log('vitepress-theme-demoblock setup1')
-</script>
-
-<!-- <script setup>
-console.log('vitepress-theme-demoblock setup2')
-</script> -->
-
-<script>
-console.log('vitepress-theme-demoblock')
-</script>

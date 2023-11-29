@@ -1,7 +1,7 @@
 <template>
   <input class="input" type="text" v-model="input" />
   <MoButton type="primary" @click="onSubmit">提交</MoButton>
-  <div style="margin-top: 16px">输出内容：{{ content }}</div>
+  <div style="margin-top: 16px">Output：{{ content }}</div>
 </template>
 
 <script setup lang="ts">
@@ -19,7 +19,7 @@ const onSubmit = () => {
 .input {
   border: 1px solid #ebebeb;
   border-radius: 4px;
-  padding: 14px;
+  padding: 5px 10px;
   width: 300px;
   font-size: 16px;
   margin-right: 16px;

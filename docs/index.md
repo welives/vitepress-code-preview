@@ -3,22 +3,19 @@
 layout: home
 
 hero:
-  name: 'demo-preview-playground'
-  text: 'demo-preview-playground'
-  tagline: My great project tagline
+  name: 'VitePress'
+  text: 'code-preview-example'
+  tagline: 帮助你在编写文档的时候嵌入 Vue 示例
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
-    - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: 查看示例
+      link: /guide
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: SFC
+    details: 在markdown文档中嵌入 Vue SFC 示例
+  - title: JSX and TSX
+    details: 支持 JSX 和 TSX 格式的 Vue 组件
+  - title: Component File
+    details: Vue 组件的代码较多时还支持引入文件的形式
 ---

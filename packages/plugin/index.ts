@@ -5,8 +5,13 @@ import type MarkdownIt from 'markdown-it'
 import container from 'markdown-it-container'
 import { cacheCode, cacheFile, markdownToComponent } from './remark'
 
+/**
+ * markdown 插件的配置参数
+ */
 interface PreviewPluginOptions {
+  /** docs文档路径 */
   docRoot: string
+  /** 自定义容器组件名 */
   componentName?: string
 }
 
@@ -78,7 +83,7 @@ export function viteDemoPreviewPlugin(): Plugin {
         // 反向更新,通过被引用的组件来更新markdown
         const fileName = path.relative(options.root, file)
         for (const [key, value] of cacheFile.entries()) {
-          if (fileName === value) {
+          if (value.includes(fileName)) {
             const markdownPath = path.resolve(options.root, key) // 组合完整的markdown文件路径
             const content = fs.readFileSync(markdownPath, 'utf-8')
             const { parsedCode, blocks } = await markdownToComponent(
@@ -105,6 +110,8 @@ export function viteDemoPreviewPlugin(): Plugin {
 
 /**
  * markdown插件,用来解析demo代码
+ * @param md
+ * @param options
  */
 export function demoPreviewPlugin(md: MarkdownIt, options: PreviewPluginOptions = { docRoot: '' }) {
   options.componentName = options.componentName || 'DemoPreview'
@@ -114,6 +121,8 @@ export function demoPreviewPlugin(md: MarkdownIt, options: PreviewPluginOptions 
 
 /**
  * 自定义容器，也就是用:::demo  ::: 包裹起来的部分
+ * @param md
+ * @param options
  */
 function createDemoContainer(md: MarkdownIt, options: PreviewPluginOptions) {
   const { componentName = 'DemoPreview', docRoot } = options
@@ -122,7 +131,7 @@ function createDemoContainer(md: MarkdownIt, options: PreviewPluginOptions) {
       return !!params.trim().match(/^demo\s*(.*)$/)
     },
     render(tokens: MarkdownIt.Token[], idx: number) {
-      const m = tokens[idx].info.trim().match(/^demo\s*(src=.*\s)?(virtual-([a-zA-Z0-9]+))?$/)
+      const m = tokens[idx].info.trim().match(/^demo\s*(src=.*\s)?(Virtual-([a-zA-Z0-9]+))?$/)
       // 开始标签的 nesting 为 1，结束标签的 nesting 为 -1
       if (tokens[idx].nesting === 1) {
         const virtualId = m && m.length > 2 ? m[2] : ''
@@ -137,10 +146,13 @@ function createDemoContainer(md: MarkdownIt, options: PreviewPluginOptions) {
           lang = tokens[idx + 1].info
           source = tokens[idx + 1].type === 'fence' ? tokens[idx + 1].content : ''
         }
-        // 这个componentName表示之后注册组件时所使用的组件名
+        // 这个componentName表示之后注册组件时所使用的组件名, virtualId 是生成的虚拟模块,会传递给容器组件的默认插槽
         return `<${componentName} :isFile="${!!sourceFile}" hlSource="${encodeURIComponent(
           md.options.highlight?.(source, lang, '') ?? ''
-        )}" lang="${lang}" source="${encodeURIComponent(source)}"><${virtualId} />`
+        )}" lang="${lang}" source="${encodeURIComponent(source)}"><${virtualId?.replace(
+          '-',
+          ''
+        )} />`
       }
       // 结束标签
       return `</${componentName}>`
@@ -150,6 +162,7 @@ function createDemoContainer(md: MarkdownIt, options: PreviewPluginOptions) {
 
 /**
  * 解析渲染自定义容器内部的代码块
+ * @param md
  */
 function renderDemoCode(md: MarkdownIt) {
   // 这个 fence 就类似 ```vue ... ``` 代码块中的那个vue标识
@@ -162,7 +175,7 @@ function renderDemoCode(md: MarkdownIt) {
     const isInDemoContainer =
       prevToken && prevToken.nesting === 1 && prevToken.info.trim().match(/^demo\s*(.*)$/)
     const lang = token.info.trim()
-    // 如果在demo内的话就进行自定义解析
+    // 如果在demo内的话就进行自定义渲染
     if (isInDemoContainer) {
       return `
         <template #highlight>

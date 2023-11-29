@@ -1,5 +1,5 @@
 {
-  "name": "demo-preview-playground",
+  "name": "code-preview-example",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -8,8 +8,8 @@
     "preview": "vitepress preview"
   },
   "dependencies": {
-    "vitepress-demo-preview-container": "workspace:^1.0.0",
-    "vitepress-demo-preview-plugin": "workspace:^1.0.0",
+    "@vitepress-code-preview/container": "workspace:^1.0.0",
+    "@vitepress-code-preview/plugin": "workspace:^1.0.0",
     "vue": "^3.3.8"
   },
   "devDependencies": {

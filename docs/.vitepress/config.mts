@@ -1,25 +1,20 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vitepress'
-import { demoPreviewPlugin } from 'vitepress-demo-preview-plugin'
+// import { demoPreviewPlugin } from '@vitepress-code-preview/plugin'
+import { demoPreviewPlugin } from '../../packages/plugin'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: 'demo-preview-playground',
-  description: 'demo-preview-playground',
+  title: 'code-preview-example',
+  description: 'code-preview-example',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' },
-    ],
+    nav: [{ text: '用法', link: '/guide' }],
 
     sidebar: [
       {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' },
-        ],
+        text: '用法',
+        link: '/guide',
       },
     ],
 
@@ -29,7 +24,7 @@ export default defineConfig({
     lineNumbers: true,
     config: (md) => {
       const docRoot = fileURLToPath(new URL('../', import.meta.url))
-      demoPreviewPlugin(md, { docRoot })
+      md.use(demoPreviewPlugin, { docRoot })
     },
   },
 })
