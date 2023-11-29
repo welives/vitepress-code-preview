@@ -1,6 +1,6 @@
 {
   "name": "@vitepress-code-preview/container",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "preview component of code and component in vitepress",
   "keywords": [
     "Vite",
@@ -28,6 +28,7 @@
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
     "package.json",
     "LICENSE"
   ],
