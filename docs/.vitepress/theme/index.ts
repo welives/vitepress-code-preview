@@ -1,8 +1,7 @@
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-// import DemoPreview, { useComponents } from '@vitepress-code-preview/container'
-// import '@vitepress-code-preview/container/dist/style.css'
-import DemoPreview, { useComponents } from '../../../packages/container'
+import DemoPreview, { useComponents } from '@vitepress-code-preview/container'
+import '@vitepress-code-preview/container/dist/style.css'
 import Button from '../components/Button.vue'
 import '../components/index.css'
 

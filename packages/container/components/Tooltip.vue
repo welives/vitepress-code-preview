@@ -75,14 +75,14 @@ const componentProps = {
   border-radius: 4px;
   word-wrap: break-word;
   inset: 0 auto auto 0;
-  color: #ffffff;
+  color: var(--preview-white);
   background: #303133;
-  border: 1px solid #303133;
+  border: 1px solid var(--preview-border);
 }
 
-html.dark .example-tooltip-content {
-  color: #141414;
+.dark .example-tooltip-content {
+  color: var(--preview-black);
   background: #e5eaf3;
-  border: 1px solid #e5eaf3;
+  border: 1px solid var(--preview-border);
 }
 </style>

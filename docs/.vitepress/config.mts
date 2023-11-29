@@ -1,7 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vitepress'
-// import { demoPreviewPlugin } from '@vitepress-code-preview/plugin'
-import { demoPreviewPlugin } from '../../packages/plugin'
+import { demoPreviewPlugin } from '@vitepress-code-preview/plugin'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -10,14 +9,12 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [{ text: '用法', link: '/guide' }],
-
     sidebar: [
       {
         text: '用法',
         link: '/guide',
       },
     ],
-
     socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],
   },
   markdown: {

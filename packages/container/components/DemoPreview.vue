@@ -6,14 +6,14 @@
       </div>
       <div :class="$style['example-divider--horizontal']"></div>
       <div :class="$style['example-actions']">
-        <Tooltip placement="bottom" :content="locale['edit-in-playground']">
+        <Tooltip placement="top" :content="locale['edit-in-playground']">
           <Playground v-if="lang === 'vue'" style="cursor: pointer" :code="decodedSource" />
         </Tooltip>
         <div :class="$style['example-actions--right']">
-          <Tooltip placement="bottom" :content="locale['copy-code']">
+          <Tooltip placement="top" :content="locale['copy-code']">
             <Copy style="cursor: pointer" @click="copyCode" />
           </Tooltip>
-          <Tooltip placement="bottom" :content="locale['view-source']">
+          <Tooltip placement="top" :content="locale['view-source']">
             <Code style="cursor: pointer" @click="toggleExpanded" />
           </Tooltip>
         </div>
@@ -52,7 +52,7 @@ import Copy from './icons/Copy.vue'
 import Code from './icons/Code.vue'
 import EpCaretTop from './icons/EpCaretTop.vue'
 import { useCopyCode } from '../hooks/useCopyCode'
-import '../style/transition.css'
+import '../style/index.css'
 
 interface DemoProps {
   lang: string // 源码类型
@@ -99,14 +99,14 @@ const { copyTip, copyCode } = useCopyCode(decodedSource.value)
   padding: 0 1rem;
 }
 .example {
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--preview-border);
   border-radius: 1px;
   margin: 20px 0 50px;
 }
 .example-showcase {
   padding: 1rem;
-  color: var(--vp-c-text-1);
-  background-color: var(--vp-c-bg);
+  color: var(--preview-text-1);
+  background-color: var(--preview-bg);
 }
 
 .example-divider--horizontal {
@@ -121,7 +121,7 @@ const { copyTip, copyCode } = useCopyCode(decodedSource.value)
   padding: 0 8px;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px dashed var(--vp-c-divider);
+  border-top: 1px dashed var(--preview-divider);
 }
 
 .example-actions--right {
@@ -132,18 +132,18 @@ const { copyTip, copyCode } = useCopyCode(decodedSource.value)
 
 .example-source-wrapper {
   overflow: hidden;
-  border-top: 1px dashed var(--vp-c-divider);
+  border-top: 1px dashed var(--preview-divider);
   transition: 0.3s;
 }
 .example-control {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid var(--vp-c-divider);
+  border-top: 1px solid var(--preview-border);
   height: 44px;
   box-sizing: border-box;
-  background-color: var(--vp-c-bg);
-  color: var(--vp-c-text-2);
+  background-color: var(--preview-bg);
+  color: var(--preview-text-2);
   cursor: pointer;
   position: sticky;
   left: 0;
@@ -162,13 +162,13 @@ const { copyTip, copyCode } = useCopyCode(decodedSource.value)
 }
 
 .example-control:hover {
-  color: var(--vp-c-brand);
+  color: var(--preview-primary-color);
 }
 .example-actions-tip {
   position: absolute;
   left: 50%;
   transform: translate(-50%);
   font-size: 14px;
-  color: var(--vp-c-green-3);
+  color: var(--preview-green-3);
 }
 </style>

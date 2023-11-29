@@ -1,1 +1,35 @@
 @import './transition.css';
+
+:root {
+  --preview-white: var(--vp-c-white);
+  --preview-black: var(--vp-c-black);
+  --preview-bg: var(--vp-c-bg);
+  --preview-green-3: var(--vp-c-green-3);
+  --preview-soft: var(--vp-c-bg-soft);
+  --preview-mute: var(--vp-c-bg-mute);
+  --preview-border: rgb(240, 240, 240);
+  --preview-divider: var(--vp-c-divider);
+  --preview-text-1: var(--vp-c-text-1);
+  --preview-text-2: var(--vp-c-text-2);
+  --preview-text-3: var(--vp-c-text-3);
+  --preview-text-4: var(--vp-c-text-4);
+  --preview-code-block-bg: #343030;
+  --preview-primary-color: var(--vp-c-brand);
+}
+
+.dark:root {
+  --preview-white: var(--vp-c-white);
+  --preview-black: var(--vp-c-black);
+  --preview-bg: var(--vp-c-bg);
+  --preview-green-3: var(--vp-c-green-3);
+  --preview-soft: var(--vp-c-bg-soft);
+  --preview-mute: var(--vp-c-bg-mute);
+  --preview-border: rgb(240, 240, 240, 0.1);
+  --preview-divider: var(--vp-c-divider);
+  --preview-text-1: var(--vp-c-text-1);
+  --preview-text-2: var(--vp-c-text-2);
+  --preview-text-3: var(--vp-c-text-3);
+  --preview-text-4: var(--vp-c-text-4);
+  --preview-code-block-bg: #282626;
+  --preview-primary-color: var(--vp-c-brand);
+}
