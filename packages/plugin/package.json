@@ -9,8 +9,8 @@
     "plugin",
     "demo",
     "preview",
-    "jsx",
-    "tsx"
+    "JSX",
+    "TSX"
   ],
   "author": "welives",
   "license": "MIT",

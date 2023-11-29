@@ -6,8 +6,8 @@
     "Vite",
     "VitePress",
     "Vue",
-    "jsx",
-    "tsx",
+    "JSX",
+    "TSX",
     "demo",
     "preview"
   ],
