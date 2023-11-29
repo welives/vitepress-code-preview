@@ -84,7 +84,7 @@ const title = ref('this is basic demo')
 :::
 ````
 
-![basic-demo](./assets/basic-demo.png)
+![basic-demo](../../assets/basic-demo.png)
 
 ### 💪 支持 JSX 和 TSX
 
@@ -105,7 +105,7 @@ export default defineComponent({
 :::
 ````
 
-![support-jsx-tsx](./assets/support-jsx-tsx.png)
+![support-jsx-tsx](../../assets/support-jsx-tsx.png)
 
 ### 💡 使用其他组件
 
@@ -126,7 +126,7 @@ export default defineComponent({
 :::
 ````
 
-![other-component](./assets/other-component.png)
+![other-component](../../assets/other-component.png)
 
 ### 🐱‍👤 还支持文件引入的方式
 
@@ -135,4 +135,4 @@ export default defineComponent({
 :::
 ```
 
-![use-file](./assets/use-file.png)
+![use-file](../../assets/use-file.png)
