@@ -9,10 +9,10 @@
 
 ## 🏄‍♂️ 插件包
 
-| Package                                                 | Version (click for changelogs)                                                                                     |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| [@vitepress-code-preview/container](packages/container) | [![container version](https://badgen.net/npm/v/vitepress-code-preview/container)](packages/container/CHANGELOG.md) |
-| [@vitepress-code-preview/plugin](packages/plugin)       | [![plugin version](https://badgen.net/npm/v/vitepress-code-preview/plugin)](packages/plugin/CHANGELOG.md)          |
+| Package                                                 | Version (click for changelogs)                                                                                      |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| [@vitepress-code-preview/container](packages/container) | [![container version](https://badgen.net/npm/v/@vitepress-code-preview/container)](packages/container/CHANGELOG.md) |
+| [@vitepress-code-preview/plugin](packages/plugin)       | [![plugin version](https://badgen.net/npm/v/@vitepress-code-preview/plugin)](packages/plugin/CHANGELOG.md)          |
 
 ## ⚙️ 安装
 

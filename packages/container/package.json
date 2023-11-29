@@ -8,7 +8,9 @@
     "Vue",
     "plugin",
     "demo",
-    "preview"
+    "preview",
+    "jsx",
+    "tsx"
   ],
   "author": "welives",
   "license": "MIT",
@@ -26,16 +28,17 @@
   "files": [
     "dist",
     "README.md",
-    "package.json"
+    "package.json",
+    "LICENSE"
   ],
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build"
   },
-  "homepage": "",
+  "homepage": "https://github.com/welives/vitepress-code-preview",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:welives/vitepress-code-preview.git"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.0",

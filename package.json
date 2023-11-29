@@ -13,10 +13,10 @@
   ],
   "author": "welives",
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/welives/vitepress-code-preview",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:welives/vitepress-code-preview.git"
   },
   "workspaces": [
     "docs",
