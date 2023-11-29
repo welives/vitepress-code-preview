@@ -63,7 +63,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       # 安装依赖
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
       # 插件打包
       - name: Build plugin
         run: pnpm build
