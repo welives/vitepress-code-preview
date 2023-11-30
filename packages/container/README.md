@@ -22,7 +22,7 @@ pnpm add @vitepress-code-preview/container @vitepress-code-preview/plugin
 
 ## 🚀 引入
 
-- ① 编辑`docs/vite.config.ts`，注册 Vite 插件，如果需要支持 JSX 组件，请安装 `@vitejs/plugin-vue-jsx`
+- ① 编辑 `docs/vite.config.ts`，注册 Vite 插件，如果需要支持 JSX 组件，请安装 `@vitejs/plugin-vue-jsx`
 
 ```ts
 import { defineConfig } from 'vite'
@@ -33,7 +33,7 @@ export default defineConfig({
 })
 ```
 
-- ② 编辑`.vitepress/config.ts`，注册 markdown 插件
+- ② 编辑 `docs/.vitepress/config.ts`，注册 markdown 插件
 
 ```ts
 import { fileURLToPath, URL } from 'node:url'
@@ -50,7 +50,7 @@ export default defineConfig({
 })
 ```
 
-- ③ 编辑`.vitepress/theme/index.ts`，注册组件容器
+- ③ 编辑 `docs/.vitepress/theme/index.ts`，注册组件容器
 
 ```ts
 import type { Theme } from 'vitepress'
@@ -60,8 +60,8 @@ import '@vitepress-code-preview/container/dist/style.css'
 
 export default {
   ...DefaultTheme,
-  enhanceApp({ app }: { app: App }) {
-    useComponents(app, DemoPreview)
+  enhanceApp(ctx) {
+    useComponents(ctx.app, DemoPreview)
   },
 } satisfies Theme
 ```

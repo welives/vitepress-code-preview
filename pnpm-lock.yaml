@@ -137,9 +137,6 @@ importers:
       vite:
         specifier: ^5.0.2
         version: registry.npmmirror.com/vite@5.0.4(@types/node@20.10.1)
-      vitepress:
-        specifier: ^1.0.0-rc.30
-        version: registry.npmmirror.com/vitepress@1.0.0-rc.30(@algolia/client-search@4.20.0)(@types/node@20.10.1)(search-insights@2.11.0)(typescript@5.3.2)
 
 packages:
 
@@ -2782,7 +2779,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: registry.npmmirror.com/caniuse-lite@1.0.30001565
-      electron-to-chromium: registry.npmmirror.com/electron-to-chromium@1.4.597
+      electron-to-chromium: registry.npmmirror.com/electron-to-chromium@1.4.598
       node-releases: registry.npmmirror.com/node-releases@2.0.13
       update-browserslist-db: registry.npmmirror.com/update-browserslist-db@1.0.13(browserslist@4.22.1)
     dev: true
@@ -3245,10 +3242,10 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  registry.npmmirror.com/electron-to-chromium@1.4.597:
-    resolution: {integrity: sha512-0XOQNqHhg2YgRVRUrS4M4vWjFCFIP2ETXcXe/0KIQBjXE9Cpy+tgzzYfuq6HGai3hWq0YywtG+5XK8fyG08EjA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/electron-to-chromium/-/electron-to-chromium-1.4.597.tgz}
+  registry.npmmirror.com/electron-to-chromium@1.4.598:
+    resolution: {integrity: sha512-0JnipX0scPUlwsptQVCZggoCpREv+IrVD3h0ZG+sldmK9L27tSV3QjV8+QdaA4qQTzDf3PluNS45YYJky1oASw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/electron-to-chromium/-/electron-to-chromium-1.4.598.tgz}
     name: electron-to-chromium
-    version: 1.4.597
+    version: 1.4.598
     dev: true
 
   registry.npmmirror.com/emoji-regex@8.0.0:
@@ -3321,7 +3318,7 @@ packages:
       is-weakref: registry.npmmirror.com/is-weakref@1.0.2
       object-inspect: registry.npmmirror.com/object-inspect@1.13.1
       object-keys: registry.npmmirror.com/object-keys@1.1.1
-      object.assign: registry.npmmirror.com/object.assign@4.1.4
+      object.assign: registry.npmmirror.com/object.assign@4.1.5
       regexp.prototype.flags: registry.npmmirror.com/regexp.prototype.flags@1.5.1
       safe-array-concat: registry.npmmirror.com/safe-array-concat@1.0.1
       safe-regex-test: registry.npmmirror.com/safe-regex-test@1.0.0
@@ -5402,10 +5399,10 @@ packages:
     engines: {node: '>= 10.12.0'}
     dev: true
 
-  registry.npmmirror.com/object.assign@4.1.4:
-    resolution: {integrity: sha512-1mxKf0e58bvyjSCtKYY4sRe9itRk3PJpquJOjeIkz885CczcI4IvJJDLPS72oowuSh+pBxUFROpX+TU++hxhZQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/object.assign/-/object.assign-4.1.4.tgz}
+  registry.npmmirror.com/object.assign@4.1.5:
+    resolution: {integrity: sha512-byy+U7gp+FVwmyzKPYhW2h5l3crpmGsxl7X2s8y43IgxvG4g3QZ6CffDtsNQy1WsmZpQbO+ybo0AlW7TY6DcBQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/object.assign/-/object.assign-4.1.5.tgz}
     name: object.assign
-    version: 4.1.4
+    version: 4.1.5
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: registry.npmmirror.com/call-bind@1.0.5
