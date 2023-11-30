@@ -1,5 +1,11 @@
 # @vitepress-code-preview/container
 
+## 1.0.5
+
+### Patch Changes
+
+- remove useData
+
 ## 1.0.4
 
 ### Patch Changes
