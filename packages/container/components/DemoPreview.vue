@@ -34,7 +34,7 @@
       </CollapseTransition>
       <Transition name="el-fade-in-linear">
         <div v-show="isExpanded" :class="$style['example-control']" @click="toggleExpanded">
-          <EpCaretTop :class="$style['control-icon']" />
+          <span :class="$style['control-icon']"></span>
           <span :class="$style['control-text']">{{ locale['hide-source'] }}</span>
         </div>
       </Transition>
@@ -50,7 +50,6 @@ import Tooltip from './Tooltip.vue'
 import Playground from './icons/SfcPlayground.vue'
 import Copy from './icons/Copy.vue'
 import Code from './icons/Code.vue'
-import EpCaretTop from './icons/EpCaretTop.vue'
 import { useCopyCode } from '../hooks/useCopyCode'
 import '../style/index.css'
 
@@ -152,18 +151,28 @@ const { copyTip, copyCode } = useCopyCode(decodedSource.value)
   z-index: 10;
 }
 
-.example-control .control-icon {
-  font-size: 18px;
-}
-
 .example-control .control-text {
   margin-left: 10px;
   font-size: 14px;
 }
 
+.control-icon {
+  content: '';
+  width: 0;
+  height: 0;
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  border-bottom: 6px solid var(--preview-text-3);
+}
+
+.example-control:hover .control-icon {
+  border-bottom-color: var(--preview-primary-color);
+}
+
 .example-control:hover {
   color: var(--preview-primary-color);
 }
+
 .example-actions-tip {
   position: absolute;
   left: 50%;

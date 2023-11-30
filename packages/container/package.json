@@ -49,13 +49,13 @@
     "vitepress": "1.0.0-rc.30"
   },
   "dependencies": {
-    "@floating-ui/vue": "^1.0.2",
-    "vue": "^3.3.8"
+    "@floating-ui/vue": "^1.0.2"
   },
   "peerDependencies": {
-    "vue": "^3.3.0",
-    "vite": "^4.5.0",
-    "vitepress": "*"
+    "vue": "^3.3.0"
   },
-  "packageManager": "pnpm@8.10.0"
+  "packageManager": "pnpm@8.10.0",
+  "engines": {
+    "node": ">= 16"
+  }
 }

@@ -59,9 +59,8 @@
     "remark-stringify": "^11.0.0",
     "unified": "^11.0.4"
   },
-  "peerDependencies": {
-    "vite": "^4.5.0",
-    "vitepress": "*"
-  },
-  "packageManager": "pnpm@8.10.0"
+  "packageManager": "pnpm@8.10.0",
+  "engines": {
+    "node": ">= 16"
+  }
 }

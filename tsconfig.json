@@ -14,6 +14,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src", "packages/**/*.ts", "packages/**/*.vue", "docs/.vitepress/**/*"],
-  "exclude": ["**/dist", "**/node_modules"]
+  "include": ["scripts"],
+  "exclude": ["dist", "node_modules"]
 }

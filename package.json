@@ -23,9 +23,9 @@
     "packages/*"
   ],
   "scripts": {
-    "docs:dev": "pnpm --filter=code-preview-example dev",
-    "docs:preview": "pnpm --filter=code-preview-example preview",
-    "docs:build": "pnpm --filter=code-preview-example build",
+    "docs:dev": "pnpm --filter=code-preview-example docs:dev",
+    "docs:preview": "pnpm --filter=code-preview-example docs:preview",
+    "docs:build": "pnpm --filter=code-preview-example docs:build",
     "build": "pnpm container:build && pnpm plugin:build",
     "container:dev": "pnpm --filter=@vitepress-code-preview/container dev",
     "container:build": "pnpm --filter=@vitepress-code-preview/container build",
@@ -43,19 +43,13 @@
     "@types/node": "^20.10.0",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
-    "@vitejs/plugin-vue": "^4.5.0",
-    "@vitejs/plugin-vue-jsx": "^3.1.0",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-vue": "^9.18.1",
     "esno": "^4.0.0",
     "prettier": "^3.1.0",
-    "typescript": "^5.3.2",
-    "vue": "^3.3.8"
-  },
-  "peerDependencies": {
-    "vue": "^3.3.0"
+    "typescript": "^5.3.2"
   },
   "packageManager": "pnpm@8.10.0",
   "engines": {

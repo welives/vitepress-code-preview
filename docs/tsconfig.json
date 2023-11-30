@@ -6,5 +6,5 @@
     }
   },
   "include": ["**/*"],
-  "exclude": ["node_modules", ".vitepress/cache"]
+  "exclude": ["node_modules", "dist", ".vitepress/cache"]
 }

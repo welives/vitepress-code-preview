@@ -28,7 +28,7 @@ export function viteDemoPreviewPlugin(): Plugin {
   // 用来匹配虚拟模块
   const virtualModRegex = /^virtual:.*\.md\.([a-zA-Z0-9]+)\.(vue|jsx|tsx)$/
   return {
-    name: 'vite-plugin-demo-preview',
+    name: 'vite-plugin-code-preview',
     enforce: 'pre',
     async configResolved(config) {
       const isVitepress = config.plugins.find((p) => p.name === 'vitepress')
@@ -70,7 +70,6 @@ export function viteDemoPreviewPlugin(): Plugin {
         )
         for (const b of blocks) {
           const virtualModule = server.moduleGraph.getModuleById(b.id)
-          // 艹, 可算找到能更新虚拟模块的api了
           if (virtualModule) {
             await server.reloadModule(virtualModule)
           }
@@ -131,9 +130,10 @@ function createDemoContainer(md: MarkdownIt, options: PreviewPluginOptions) {
       return !!params.trim().match(/^demo\s*(.*)$/)
     },
     render(tokens: MarkdownIt.Token[], idx: number) {
-      const m = tokens[idx].info.trim().match(/^demo\s*(src=.*\s)?(Virtual-([a-zA-Z0-9]+))?$/)
+      const token = tokens[idx]
       // 开始标签的 nesting 为 1，结束标签的 nesting 为 -1
-      if (tokens[idx].nesting === 1) {
+      if (token.nesting === 1 && token.type === 'container_demo_open') {
+        const m = tokens[idx].info.trim().match(/^demo\s*(src=.*\s)?(Virtual-([a-zA-Z0-9]+))?$/)
         const virtualId = m && m.length > 2 ? m[2] : ''
         const sourceFile = m && m.length > 1 ? m[1]?.split('=')[1].trim() : ''
         let source = ''
@@ -149,10 +149,8 @@ function createDemoContainer(md: MarkdownIt, options: PreviewPluginOptions) {
         // 这个componentName表示之后注册组件时所使用的组件名, virtualId 是生成的虚拟模块,会传递给容器组件的默认插槽
         return `<${componentName} :isFile="${!!sourceFile}" hlSource="${encodeURIComponent(
           md.options.highlight?.(source, lang, '') ?? ''
-        )}" lang="${lang}" source="${encodeURIComponent(source)}"><${virtualId?.replace(
-          '-',
-          ''
-        )} />`
+        )}" lang="${lang}" source="${encodeURIComponent(source)}">
+        <${virtualId?.replace('-', '')} />`
       }
       // 结束标签
       return `</${componentName}>`
