@@ -1,5 +1,11 @@
 # @vitepress-code-preview/container
 
+## 1.0.6
+
+### Patch Changes
+
+- 增加全屏预览
+
 ## 1.0.5
 
 ### Patch Changes
