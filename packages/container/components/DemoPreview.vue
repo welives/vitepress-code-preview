@@ -10,6 +10,9 @@
           <Playground v-if="lang === 'vue'" style="cursor: pointer" :code="decodedSource" />
         </Tooltip>
         <div :class="$style['example-actions--right']">
+          <Tooltip placement="top" :content="locale['full-screen']">
+            <FullScreen style="cursor: pointer" @click="fullScreen" />
+          </Tooltip>
           <Tooltip placement="top" :content="locale['copy-code']">
             <Copy style="cursor: pointer" @click="copyCode" />
           </Tooltip>
@@ -40,6 +43,9 @@
       </Transition>
     </section>
   </ClientOnly>
+  <DemoFullScreenPreview v-model="isFullScreen">
+    <slot />
+  </DemoFullScreenPreview>
 </template>
 
 <script setup lang="ts">
@@ -47,9 +53,11 @@ import { ref, defineProps, computed } from 'vue'
 import CollapseTransition from './CollapseTransition.vue'
 import Tooltip from './Tooltip.vue'
 import Playground from './icons/SfcPlayground.vue'
+import FullScreen from './icons/FullScreen.vue'
 import Copy from './icons/Copy.vue'
 import Code from './icons/Code.vue'
 import { useCopyCode } from '../hooks/useCopyCode'
+import DemoFullScreenPreview from './DemoFullScreenPreview.vue'
 import '../style/index.css'
 
 interface DemoProps {
@@ -72,12 +80,17 @@ const locale = computed(() => {
     'view-source': '查看源代码',
     'hide-source': '隐藏源代码',
     'edit-in-playground': '在 Playground 中编辑',
+    'full-screen': '全屏预览',
     'copy-code': '复制代码',
     'copy-success': '复制成功',
   }
 })
 const decodedSource = computed(() => decodeURIComponent(props.source))
 const decodedHlSource = computed(() => decodeURIComponent(props.hlSource))
+const isFullScreen = ref(false)
+const fullScreen = () => {
+  isFullScreen.value = true
+}
 const isExpanded = ref(false)
 const toggleExpanded = () => {
   isExpanded.value = !isExpanded.value
