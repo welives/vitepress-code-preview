@@ -30,7 +30,7 @@ const close = () => {
 </script>
 
 <style module>
-body:has(.modal) {
+body:has(.example-modal) {
   overflow: hidden;
 }
 .example-modal {
