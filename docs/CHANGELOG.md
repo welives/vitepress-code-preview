@@ -1,5 +1,13 @@
 # code-preview-example
 
+## 1.0.6
+
+### Patch Changes
+
+- fix
+- Updated dependencies
+  - @vitepress-code-preview/container@1.0.7
+
 ## 1.0.5
 
 ### Patch Changes
