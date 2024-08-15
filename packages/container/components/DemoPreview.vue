@@ -7,17 +7,17 @@
       <div :class="$style['example-divider--horizontal']"></div>
       <div :class="$style['example-actions']">
         <Tooltip placement="top" :content="locale['edit-in-playground']">
-          <Playground v-if="lang === 'vue'" style="cursor: pointer" :code="decodedSource" />
+          <Playground class="example-actions-playground" v-if="lang === 'vue'" style="cursor: pointer" :code="decodedSource" />
         </Tooltip>
         <div :class="$style['example-actions--right']">
           <Tooltip placement="top" :content="locale['full-screen']">
-            <FullScreen style="cursor: pointer" @click="fullScreen" />
+            <FullScreen class="example-actions-fullscreen" style="cursor: pointer" @click="fullScreen" />
           </Tooltip>
           <Tooltip placement="top" :content="locale['copy-code']">
-            <Copy style="cursor: pointer" @click="copyCode" />
+            <Copy class="example-actions-copy" style="cursor: pointer" @click="copyCode" />
           </Tooltip>
           <Tooltip placement="top" :content="locale['view-source']">
-            <Code style="cursor: pointer" @click="toggleExpanded" />
+            <Code class="example-actions-code" style="cursor: pointer" @click="toggleExpanded" />
           </Tooltip>
         </div>
         <span v-show="copyTip" :class="$style['example-actions-tip']">{{
