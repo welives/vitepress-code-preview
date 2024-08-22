@@ -51,7 +51,7 @@ export async function markdownToComponent(code: string, id: string, root: string
           }
           if (!node.children || !node.children[0].value) return false
           // 判断demo容器是否为内联代码块的模式
-          const hasDemo = node.children[0].value.trim().match(/demo\s*(.*)$/)
+          const hasDemo = node.children[0].value.trim() === ':::demo'
           const nextNodeIsCode = hasDemo && tree.children![index + 1].type === 'code'
           // 下一个节点如果是内联代码块的话
           if (nextNodeIsCode) {
@@ -83,7 +83,7 @@ export async function markdownToComponent(code: string, id: string, root: string
             seed++
           }
         } catch (error) {
-          console.error('parse markdown error in function transformCodeToComponent')
+          console.error(`parse markdown error in function markdownToComponent 👇\n ${error}`)
           return false
         }
       })
@@ -99,9 +99,8 @@ export async function markdownToComponent(code: string, id: string, root: string
       if (scriptSetup.index !== -1) {
         const node = tree.children![scriptSetup.index]
         node.value = node.value.replace(ScriptSetupRegex, (m: string, ...args: string[]) => {
-          return `<script ${args[0] ?? ''} setup ${args[1] ?? ''}>${os.EOL}${virtualModules}${
-            os.EOL
-          }${args[2] ?? ''}</script>`
+          return `<script ${args[0] ?? ''} setup ${args[1] ?? ''}>${os.EOL}${virtualModules}${os.EOL
+            }${args[2] ?? ''}</script>`
         })
       } else {
         // 如果没有setup的话,就新增一个用来将虚拟模块追加到markdown
