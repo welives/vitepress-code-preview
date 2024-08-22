@@ -1,5 +1,11 @@
 # @vitepress-code-preview/plugin
 
+## 1.0.5
+
+### Patch Changes
+
+- 修复markdown中识别demo区块的bug
+
 ## 1.0.4
 
 ### Patch Changes
