@@ -49,10 +49,10 @@ export async function markdownToComponent(code: string, id: string, root: string
             scriptSetup.index = index
             scriptSetup.content = m[3] ?? ''
           }
-          if (!node.children || !node.children[0].value) return false
+          if (!node.children || !node.children[0] || !node.children[0].value) return false
           // 判断demo容器是否为内联代码块的模式
           const hasDemo = node.children[0].value.trim() === ':::demo'
-          const nextNodeIsCode = hasDemo && tree.children![index + 1].type === 'code'
+          const nextNodeIsCode = hasDemo && tree.children && tree.children[index + 1] && tree.children[index + 1].type === 'code'
           // 下一个节点如果是内联代码块的话
           if (nextNodeIsCode) {
             const hashKey = hash(`${id}-demo-${seed}`)
