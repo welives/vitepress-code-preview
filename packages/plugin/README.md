@@ -9,10 +9,10 @@
 
 ## 🏄‍♂️ 插件包
 
-| Package                                                 | Version (click for changelogs)                                                                                      |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| [@vitepress-code-preview/container](packages/container) | [![container version](https://badgen.net/npm/v/@vitepress-code-preview/container)](packages/container/CHANGELOG.md) |
-| [@vitepress-code-preview/plugin](packages/plugin)       | [![plugin version](https://badgen.net/npm/v/@vitepress-code-preview/plugin)](packages/plugin/CHANGELOG.md)          |
+| Package                                                 | Version                                                     | Download                                                        |
+| ------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------- |
+| [@vitepress-code-preview/container](packages/container) | [![npm version][container-version]][container-version-href] | [![npm downloads][container-downloads]][container-version-href] |
+| [@vitepress-code-preview/plugin](packages/plugin)       | [![npm version][plugin-version]][plugin-version-href]       | [![npm downloads][plugin-downloads]][plugin-version-href]       |
 
 ## ⚙ 安装
 
@@ -153,3 +153,14 @@ export default {
 ```
 
 ![use-file](./assets/use-file.png)
+
+<!-- Badges -->
+
+[container-version]: https://img.shields.io/npm/v/@vitepress-code-preview/container/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[container-downloads]: https://img.shields.io/npm/dm/@vitepress-code-preview/container.svg?style=flat&colorA=18181B&colorB=28CF8D
+[container-version-href]: https://npmjs.com/package/@vitepress-code-preview/container
+[plugin-version]: https://img.shields.io/npm/v/@vitepress-code-preview/plugin/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[plugin-downloads]: https://img.shields.io/npm/dm/@vitepress-code-preview/plugin.svg?style=flat&colorA=18181B&colorB=28CF8D
+[plugin-version-href]: https://npmjs.com/package/@vitepress-code-preview/plugin
+[license-src]: https://img.shields.io/npm/l/@vitepress-code-preview/container.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: ./LICENSE

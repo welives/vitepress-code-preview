@@ -1,5 +1,12 @@
 # code-preview-example
 
+## 1.0.8
+
+### Patch Changes
+
+- Updated dependencies
+  - @vitepress-code-preview/plugin@1.0.6
+
 ## 1.0.7
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @vitepress-code-preview/plugin
 
+## 1.0.6
+
+### Patch Changes
+
+- 优化节点判断，减少undefined导致error日志
+
 ## 1.0.5
 
 ### Patch Changes

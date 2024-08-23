@@ -8,10 +8,10 @@ title: 指南
 
 ## 🏄‍♂️ 插件包
 
-| Package                                                                                              | Version (click for changelogs)                                                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [@vitepress-code-preview/container](https://www.npmjs.com/package/@vitepress-code-preview/container) | [![container version](https://badgen.net/npm/v/@vitepress-code-preview/container)](https://github.com/welives/vitepress-code-preview/blob/main/packages/container/CHANGELOG.md) |
-| [@vitepress-code-preview/plugin](https://www.npmjs.com/package/@vitepress-code-preview/plugin)       | [![plugin version](https://badgen.net/npm/v/@vitepress-code-preview/plugin)](https://github.com/welives/vitepress-code-preview/blob/main/packages/plugin/CHANGELOG.md)          |
+| Package                                                         | Version                                                     | Download                                                        |
+| --------------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------- |
+| [@vitepress-code-preview/container][container-source-code-href] | [![npm version][container-version]][container-version-href] | [![npm downloads][container-downloads]][container-version-href] |
+| [@vitepress-code-preview/plugin][plugin-source-code-href]       | [![npm version][plugin-version]][plugin-version-href]       | [![npm downloads][plugin-downloads]][plugin-version-href]       |
 
 ## ⚙ 安装
 
@@ -190,3 +190,14 @@ export default defineComponent({
 
 :::demo src=examples/Input.vue
 :::
+
+<!-- Badges -->
+
+[container-version]: https://img.shields.io/npm/v/@vitepress-code-preview/container/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[container-downloads]: https://img.shields.io/npm/dm/@vitepress-code-preview/container.svg?style=flat&colorA=18181B&colorB=28CF8D
+[container-version-href]: https://npmjs.com/package/@vitepress-code-preview/container
+[container-source-code-href]: https://github.com/welives/vitepress-code-preview/blob/main/packages/container
+[plugin-version]: https://img.shields.io/npm/v/@vitepress-code-preview/plugin/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[plugin-downloads]: https://img.shields.io/npm/dm/@vitepress-code-preview/plugin.svg?style=flat&colorA=18181B&colorB=28CF8D
+[plugin-version-href]: https://npmjs.com/package/@vitepress-code-preview/plugin
+[plugin-source-code-href]: https://github.com/welives/vitepress-code-preview/blob/main/packages/plugin
